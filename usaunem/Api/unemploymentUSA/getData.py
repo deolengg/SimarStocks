@@ -1,8 +1,5 @@
 import quandl as quandl
 import sqlite3
-import pandas as pd
-
-
 
 conn = sqlite3.connect('usaunem.db')
 c = conn.cursor()
