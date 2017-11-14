@@ -1,0 +1,20 @@
+  {% extends "usaunem/header.html" %}
+
+  {% block content %}
+      {% load staticfiles %}
+      <div>
+            <h2 align="center">Unemployment USA</h2>
+      </div>
+      <div align="center">
+        <h3>Graph</h3>
+          <p>Last Updated On Date : 2017-11-01</p>
+        <p>Check for <button type="button" class="btn btn-primary btn-sm">Update</button>
+        </p>
+      </div>
+      <div align="center">
+        <img src="{% static 'images/usumem.jpg'%}" class="center fit" width="100%">
+      </div>
+      <div align="center" class="checkbox">
+        <label><input type="checkbox"> Check to Highlight Recessions</label>
+      </div>
+    {% endblock %}
