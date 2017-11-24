@@ -4,6 +4,7 @@
       {% load staticfiles %}
       <div>
             <h4 align="center">Unemployment USA</h4>
+
       </div>
       <div align="center">
           <p>Last Updated On Date : 2017-11-01</p>
@@ -11,8 +12,37 @@
         </p>
       </div>
       <div align="center">
-        <img src="{% static 'images/usumem.jpg'%}" class="center fit" width="100%">
+          <script>
+        window.onload = function () {
+        var options = {
+	    exportEnabled: true,
+	    animationEnabled: true,
+	data: [
+	{
+		type: "line", //change it to line, area, bar, pie, etc
+		dataPoints: [
+			{ y: 10 },
+			{ y: 6 },
+			{ y: 14 },
+			{ y: 12 },
+			{ y: 19 },
+			{ y: 14 },
+			{ y: 26 },
+			{ y: 10 },
+			{ y: 22 }
+		]
+	}
+	]
+};
+$("#chartContainer").CanvasJSChart(options);
+
+}
+</script>
       </div>
+
+      <div id="chartContainer" style="height: 300px; width: 100%;"></div>
+      <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
+      <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
       <div align="center" class="checkbox">
         <label><input type="checkbox"> Check to Highlight Recessions</label>
       </div>
