@@ -1,14 +1,14 @@
-import sqlite3
+
 import numpy as np
 
-conn = sqlite3.connect('usaunem.db')
-c = conn.cursor()
+from django.db import connections
+
+
+c = connections['usaunem'].cursor()
 for_three_months = 3
 
 def close_everything():
-    conn.commit()
     c.close()
-    conn.close()
 
 
 def counting_till(value):

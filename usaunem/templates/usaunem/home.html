@@ -2,48 +2,58 @@
 
   {% block content %}
       {% load staticfiles %}
-      <div>
-            <h4 align="center">Unemployment USA</h4>
-
-      </div>
       <div align="center">
-          <p>Last Updated On Date : 2017-11-01</p>
-        <p>Check for <button type="button" class="btn btn-primary btn-sm">Update</button>
-        </p>
-      </div>
-      <div align="center">
-          <script>
-        window.onload = function () {
-        var options = {
-	    exportEnabled: true,
-	    animationEnabled: true,
-	data: [
-	{
-		type: "line", //change it to line, area, bar, pie, etc
-		dataPoints: [
-			{ y: 10 },
-			{ y: 6 },
-			{ y: 14 },
-			{ y: 12 },
-			{ y: 19 },
-			{ y: 14 },
-			{ y: 26 },
-			{ y: 10 },
-			{ y: 22 }
-		]
-	}
-	]
-};
-$("#chartContainer").CanvasJSChart(options);
+          <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+          <script type="text/javascript">
+           google.charts.load('current', {'packages':['line']});
+            google.charts.setOnLoadCallback(drawChart);
 
-}
-</script>
-      </div>
 
-      <div id="chartContainer" style="height: 300px; width: 100%;"></div>
-      <script src="https://canvasjs.com/assets/script/jquery-1.11.1.min.js"></script>
-      <script src="https://canvasjs.com/assets/script/jquery.canvasjs.min.js"></script>
+  function convertUTCDateToLocalDate(date) {
+        var newDate = new Date(date.getTime()+date.getTimezoneOffset()*60*1000);
+
+        var offset = date.getTimezoneOffset() / 60;
+        var hours = date.getHours();
+
+        newDate.setHours(hours - offset);
+
+        return newDate;
+    }
+
+    function drawChart() {
+
+      var data = new google.visualization.DataTable();
+      data.addColumn('date', 'Monthly Dates');
+      data.addColumn('number', 'Three Month Avg');
+      data.addColumn('number', 'Twelve Month Avg');
+      data.addColumn('number', 'Thirty Six Month Avg');
+
+        var chartData = $.map({{chart | safe }}, function(e) {
+            e[0] = convertUTCDateToLocalDate(new Date(e[0]));
+            return [e];
+        });
+
+        console.log(chartData);
+      data.addRows(chartData);
+
+      var options = {
+        chart: {
+          title: 'USA Employement',
+          subtitle: 'Avg Stats (3,12,36)'
+        },
+        width: 1800,
+        height: 600
+      };
+
+      var chart = new google.charts.Line(document.getElementById('linechart_material'));
+
+      chart.draw(data, google.charts.Line.convertOptions(options));
+    }
+    </script>
+
+      </div>
+      <div id="linechart_material" style="width: 100%; height: 700px"></div>
       <div align="center" class="checkbox">
-        <label><input type="checkbox"> Check to Highlight Recessions</label>
+        <label><input type="checkbox">Highlight Recessions</label>
       </div>
     {% endblock %}

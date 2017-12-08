@@ -1,8 +1,7 @@
 import quandl as quandl
-import sqlite3
+from django.db import connections
 
-conn = sqlite3.connect('usaunem.db')
-c = conn.cursor()
+c = connections['usaunem'].cursor()
 
 api = 'FRED/UNEMPLOY'
 authkey = open('APIKEY.txt', 'r').read()
@@ -14,10 +13,9 @@ def get_data():
     return datafromthestart
 
 def data_entry():
-    table1.to_sql('usaunemployment', conn, if_exists='replace', dtype={'Date': 'DATE', 'Value': 'FLOAT'})
-    conn.commit()
+    table1.to_sql('usaunemployment', if_exists='replace', dtype={'Date': 'DATE', 'Value': 'FLOAT'})
     c.close()
-    conn.close()
+
 
 table1 = get_data()
 data_entry()
