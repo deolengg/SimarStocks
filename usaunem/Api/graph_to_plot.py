@@ -13,6 +13,20 @@ class graphify:
         datelist = [str(i).replace("(", "").replace(")", "").replace(",", "").replace("u'", "").replace("'", "") for i in datelist]
         return datelist
 
+    def getLastDate(self):
+        self.c.execute("SELECT strftime('%Y-%m-%d',monthlydates) FROM usaunemploymentavg WHERE id = 1")
+        lastDate = self.c.fetchall()
+        lastDate = [str(i).replace("(", "").replace(")", "").replace(",", "").replace("u'", "").replace("'", "") for i
+                    in lastDate]
+        return lastDate
+
+    def getValues(self):
+        self.c.execute("SELECT gvalue FROM usaunemploymentavg")
+        values = self.c.fetchall()
+        values.reverse()
+        values = [str(i).replace("(", "").replace(")", "").replace("None", "0").replace(",", "") for i in values]
+        return values
+
     def getthreemonthavg(self):
         self.c.execute("SELECT threemonthavg FROM usaunemploymentavg")
         threemontlist = self.c.fetchall()
